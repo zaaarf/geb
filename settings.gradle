@@ -1,0 +1,4 @@
+rootProject.name = 'geb'
+include 'api'
+include 'geb.api'
+
