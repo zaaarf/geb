@@ -10,7 +10,7 @@ public interface IEvent {
 	 * calls to listeners, but its return values will be ignored. You probably
 	 * don't want to touch this.
 	 * @param identifier the identifier of the bus that's calling this
-	 * @return the value {@link GEB#handleEvent(IEvent)} will return for this
+	 * @return the value {@link IBus#handleEvent(IEvent)} will return for this
 	 */
 	default boolean callListeners(String identifier) {
 		return false;
