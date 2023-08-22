@@ -16,10 +16,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'com.squareup:javapoet:1.13.0'
-}
-
 jar {
     archiveFileName = "${jar.archiveBaseName.get()}-${project.version.split('-')[0]}.${jar.archiveExtension.get()}"
 }
