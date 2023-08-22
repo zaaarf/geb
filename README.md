@@ -8,7 +8,7 @@ Suppose that you have a simple event system, with annotated listeners receiving 
 
 That works, of course, but it's not that fast. Ah, if only you knew in advance, such as at compile time, who's going to get called with what... oh, wait, you do.
 
-GEB is just a basic event bus in itself; the actual magician is the processor, who writes into each event direct calls to all subscribers, to take as little time as possible.
+GEB is just a basic event bus in itself; the actual magician is the [processor](https://github.com/zaaarf/geb-processor), who writes into each event direct calls to all subscribers, to take as little time as possible.
 
 ## What's with the name?
 "GEB Bus" kind of sounds like "Jeb Bush" and I think it's very funny. Please clap.
