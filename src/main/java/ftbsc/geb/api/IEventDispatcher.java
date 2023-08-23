@@ -10,13 +10,12 @@ import java.util.Map;
  */
 public interface IEventDispatcher {
 	/**
-	 * Calls all listeners for the given identifier.
-	 * @param identifier the identifier of the bus that's calling this
+	 * Calls all listeners for the given event.
 	 * @param event the event to call
 	 * @param listeners a map mapping each {@link IListener} class to its instance
 	 * @return the value {@link IBus#handleEvent(IEvent)} will return for this
 	 */
-	boolean callListeners(String identifier, IEvent event, Map<Class<? extends IListener>, IListener> listeners);
+	boolean callListeners(IEvent event, Map<Class<? extends IListener>, IListener> listeners);
 
 	/**
 	 * @return the {@link Class} representing the event this dispatcher works with

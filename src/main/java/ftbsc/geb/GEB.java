@@ -14,12 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 0.1.0
  */
 public class GEB implements IBus {
-
-	/**
-	 * The identifier of this bus. Methods
-	 */
-	private final String identifier;
-
 	/**
 	 * A {@link Map} tying each listener class to its instance.
 	 */
@@ -31,11 +25,9 @@ public class GEB implements IBus {
 	private final Map<Class<? extends IEvent>, IEventDispatcher> dispatchMap;
 
 	/**
-	 * The public constructor.
-	 * @param identifier a {@link String} uniquely identifying this bus
+	 * The default public constructor.
 	 */
-	public GEB(String identifier) {
-		this.identifier = identifier;
+	public GEB() {
 		this.listenerMap = new ConcurrentHashMap<>();
 		this.dispatchMap = new ConcurrentHashMap<>();
 		for(IEventDispatcher dispatcher : ServiceLoader.load(IEventDispatcher.class))
@@ -58,6 +50,6 @@ public class GEB implements IBus {
 	 */
 	@Override
 	public boolean handleEvent(IEvent event) {
-		return this.dispatchMap.get(event.getClass()).callListeners(this.identifier, event, this.listenerMap);
+		return this.dispatchMap.get(event.getClass()).callListeners(event, this.listenerMap);
 	}
 }
