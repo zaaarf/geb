@@ -44,6 +44,15 @@ public class GEB implements IBus {
 	}
 
 	/**
+	 * Unregister a listener from the bus.
+	 * @param listener the listener
+	 */
+	@Override
+	public void unregisterListener(IListener listener) {
+		this.listenerMap.remove(listener.getClass());
+	}
+
+	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
 	 * @param event the event to fire
 	 * @return true if the event was canceled, false otherwise
