@@ -7,9 +7,10 @@ package ftbsc.geb.api;
  */
 public interface IBus {
 	/**
-	 * @return the identifier of this bus
+	 * Registers a new listener on the bus.
+	 * @param listener the listener
 	 */
-	String getIdentifier();
+	void registerListener(IListener listener);
 
 	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
