@@ -4,7 +4,6 @@ package ftbsc.geb.api;
  * The interface that the generated dispatchers will all use.
  * This interface isn't really meant to be used by humans, but it should work if your
  * use case requires it.
- * @param <E> the type of event this dispatcher handles
  * @since 0.1.1
  */
 public interface IEventDispatcher {
