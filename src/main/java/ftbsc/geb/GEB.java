@@ -2,6 +2,7 @@ package ftbsc.geb;
 
 import ftbsc.geb.api.IBus;
 import ftbsc.geb.api.IEvent;
+import ftbsc.geb.api.IEventDispatcher;
 
 import java.lang.reflect.Constructor;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class GEB implements IBus {
 	 * In practice, the {@link Class} of the original event is used as key and mapped to each
 	 * class' generated {@link Constructor}.
 	 */
-	private final Map<Class<? extends IEvent>, Constructor<? extends IEvent>> eventMapper;
+	private final Map<Class<? extends IEvent>, IEventDispatcher> dispatchMap;
 
 	/**
 	 * The public constructor.
@@ -32,12 +33,9 @@ public class GEB implements IBus {
 	 */
 	public GEB(String identifier) {
 		this.identifier = identifier;
-		this.eventMapper = new ConcurrentHashMap<>();
-		for(IEvent event : ServiceLoader.load(IEvent.class)) {
-			try {
-				eventMapper.put(event.getOriginalEvent(), event.getClass().getConstructor(event.getClass()));
-			} catch(NoSuchMethodException ignored) {} //should never happen, this code is machine-generated
-		}
+		this.dispatchMap = new ConcurrentHashMap<>();
+		for(IEventDispatcher dispatcher : ServiceLoader.load(IEventDispatcher.class))
+			dispatchMap.put(dispatcher.eventType(), dispatcher);
 	}
 
 	/**
@@ -50,15 +48,11 @@ public class GEB implements IBus {
 
 	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
-	 * TODO: make this as efficient as possible
 	 * @param event the event to fire
 	 * @return true if the event was canceled, false otherwise
 	 */
 	@Override
 	public boolean handleEvent(IEvent event) {
-		try {
-			return eventMapper.get(event.getClass()).newInstance(event).callListeners(this.getIdentifier());
-		} catch(ReflectiveOperationException ignored) {} //should never happen
-		return false;
+		return dispatchMap.get(event.getClass()).callListeners(this.identifier, event);
 	}
 }
