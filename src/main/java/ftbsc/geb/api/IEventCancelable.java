@@ -15,8 +15,17 @@ public interface IEventCancelable extends IEvent {
 	}
 
 	/**
-	 * Cancels the event. Any user-defined implementation will
-	 * be ignored.
+	 * Cancels the event.
+	 * Any user-defined implementation will be ignored.
 	 */
-	default void setCanceled() {}
+	default void setCanceled() {
+		this.setCanceled(true);
+	}
+
+	/**
+	 * Cancels the event.
+	 * Any user-defined implementation will be ignored.
+	 * @param canceled whether the event should be set to canceled
+	 */
+	default void setCanceled(boolean canceled) {}
 }
