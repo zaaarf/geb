@@ -6,8 +6,7 @@ package ftbsc.geb.api;
  */
 public interface IEventCancelable extends IEvent {
 	/**
-	 * Checks whether the event was canceled; any user-defined
-	 * implementation will be ignored.
+	 * Checks whether the event was canceled.
 	 * @return whether the event was canceled
 	 */
 	default boolean isCanceled() {
@@ -16,7 +15,6 @@ public interface IEventCancelable extends IEvent {
 
 	/**
 	 * Cancels the event.
-	 * Any user-defined implementation will be ignored.
 	 */
 	default void setCanceled() {
 		this.setCanceled(true);
@@ -24,7 +22,6 @@ public interface IEventCancelable extends IEvent {
 
 	/**
 	 * Cancels the event.
-	 * Any user-defined implementation will be ignored.
 	 * @param canceled whether the event should be set to canceled
 	 */
 	default void setCanceled(boolean canceled) {}
