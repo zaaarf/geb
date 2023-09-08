@@ -4,7 +4,7 @@ plugins {
 }
 
 archivesBaseName = 'geb'
-version = gitVersion()
+version = gitVersion().split('-').getAt(0).replace('dirty', '')
 
 java {
     sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
@@ -14,8 +14,4 @@ java {
 
 repositories {
     mavenCentral()
-}
-
-jar {
-    archiveFileName = "${jar.archiveBaseName.get()}-${project.version.split('-')[0]}.${jar.archiveExtension.get()}"
 }
