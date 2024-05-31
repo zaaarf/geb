@@ -14,9 +14,6 @@ public interface IBus {
 
 	/**
 	 * Unregister a listener from the bus.
-	 * While sensible implementations can get this quite fast, it's generally
-	 * faster to use {@link IListener#isActive()}, so only use this if you
-	 * *mean* to unregister for good.
 	 * @param listener the listener
 	 */
 	void unregisterListener(IListener listener);
@@ -24,7 +21,7 @@ public interface IBus {
 	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
 	 * @param event the event to fire
-	 * @return true if the event was canceled, false otherwise
+	 * @return false if the event was canceled, true otherwise
 	 */
 	boolean handleEvent(IEvent event);
 }

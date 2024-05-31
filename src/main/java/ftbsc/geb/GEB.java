@@ -7,6 +7,7 @@ import ftbsc.geb.api.IListener;
 
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,7 +18,7 @@ public class GEB implements IBus {
 	/**
 	 * A {@link Map} tying each listener class to its instance.
 	 */
-	private final Map<Class<? extends IListener>, IListener> listenerMap;
+	private final Map<Class<? extends IListener>, Set<IListener>> listenerMap;
 
 	/**
 	 * A {@link Map} tying each event class to the appropriate dispatcher.
@@ -31,7 +32,7 @@ public class GEB implements IBus {
 		this.listenerMap = new ConcurrentHashMap<>();
 		this.dispatchMap = new ConcurrentHashMap<>();
 		for(IEventDispatcher dispatcher : ServiceLoader.load(IEventDispatcher.class))
-			dispatchMap.put(dispatcher.eventType(), dispatcher);
+			this.dispatchMap.put(dispatcher.eventType(), dispatcher);
 	}
 
 	/**
@@ -40,7 +41,10 @@ public class GEB implements IBus {
 	 */
 	@Override
 	public void registerListener(IListener listener) {
-		this.listenerMap.put(listener.getClass(), listener);
+		this.listenerMap.putIfAbsent(
+			listener.getClass(),
+			ConcurrentHashMap.newKeySet()
+		);
 	}
 
 	/**
@@ -49,13 +53,19 @@ public class GEB implements IBus {
 	 */
 	@Override
 	public void unregisterListener(IListener listener) {
-		this.listenerMap.remove(listener.getClass());
+		this.listenerMap.computeIfPresent(
+			listener.getClass(),
+			(k, l) -> {
+				l.remove(listener);
+				return l;
+			}
+		);
 	}
 
 	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
 	 * @param event the event to fire
-	 * @return true if the event was canceled, false otherwise
+	 * @return false if the event was canceled, true otherwise
 	 */
 	@Override
 	public boolean handleEvent(IEvent event) {
