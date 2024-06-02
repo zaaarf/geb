@@ -6,6 +6,7 @@ import ftbsc.geb.api.IEventDispatcher;
 import ftbsc.geb.api.IListener;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,6 +70,8 @@ public class GEB implements IBus {
 	 */
 	@Override
 	public boolean handleEvent(IEvent event) {
-		return this.dispatchMap.get(event.getClass()).callListeners(event, this.listenerMap);
+		return Optional.ofNullable(this.dispatchMap.get(event.getClass()))
+			.map(dispatcher -> dispatcher.callListeners(event, this.listenerMap))
+			.orElse(true);
 	}
 }
