@@ -63,6 +63,12 @@ public class GEB implements IBus {
 		);
 	}
 
+	@Override
+	public boolean isRegistered(IListener listener) {
+		Set<IListener> listeners = this.listenerMap.get(listener.getClass());
+		return listeners != null && listeners.contains(listener);
+	}
+
 	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
 	 * @param event the event to fire

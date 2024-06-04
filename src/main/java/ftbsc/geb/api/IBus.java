@@ -13,10 +13,17 @@ public interface IBus {
 	void registerListener(IListener listener);
 
 	/**
-	 * Unregister a listener from the bus.
+	 * Unregisters a listener from the bus.
 	 * @param listener the listener
 	 */
 	void unregisterListener(IListener listener);
+
+	/**
+	 * Tells you whether a listener is currently registered.
+	 * Ideally this should be efficient.
+	 * @return true if the listener is registered
+	 */
+	boolean isRegistered(IListener listener);
 
 	/**
 	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
