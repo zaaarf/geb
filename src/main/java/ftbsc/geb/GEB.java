@@ -46,6 +46,8 @@ public class GEB implements IBus {
 			listener.getClass(),
 			ConcurrentHashMap.newKeySet()
 		);
+
+		this.listenerMap.get(listener.getClass()).add(listener);
 	}
 
 	/**

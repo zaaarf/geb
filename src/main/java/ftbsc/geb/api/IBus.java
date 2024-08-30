@@ -21,6 +21,7 @@ public interface IBus {
 	/**
 	 * Tells you whether a listener is currently registered.
 	 * Ideally this should be efficient.
+	 * @param listener the listener to check
 	 * @return true if the listener is registered
 	 */
 	boolean isRegistered(IListener listener);
