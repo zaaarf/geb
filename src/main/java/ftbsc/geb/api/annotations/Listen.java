@@ -11,7 +11,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks the method as a listener. Its parent must implement the {@link IListener} interface
+ * Marks the method as a listener.
+ * If the method is not static, its parent must implement the {@link IListener} interface
  * and be registered an at least one GEB instance with {@link IBus#registerListener(IListener)}.
  * The annotated method should only take a single input value, an instance of {@link IEvent} or
  * {@link IEventCancelable}.
