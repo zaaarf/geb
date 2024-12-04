@@ -24,7 +24,7 @@ public class GEB implements IBus {
 	/**
 	 * A {@link Map} tying each event class to the appropriate dispatcher.
 	 */
-	private final Map<Class<? extends IEvent>, IEventDispatcher> dispatchMap;
+	private final Map<Class<? extends IEvent>, IEventDispatcher<?>> dispatchMap;
 
 	/**
 	 * The default public constructor.
@@ -32,14 +32,10 @@ public class GEB implements IBus {
 	public GEB() {
 		this.listenerMap = new ConcurrentHashMap<>();
 		this.dispatchMap = new ConcurrentHashMap<>();
-		for(IEventDispatcher dispatcher : ServiceLoader.load(IEventDispatcher.class))
+		for(IEventDispatcher<?> dispatcher : ServiceLoader.load(IEventDispatcher.class))
 			this.dispatchMap.put(dispatcher.eventType(), dispatcher);
 	}
 
-	/**
-	 * Registers a new listener on the bus.
-	 * @param listener the listener
-	 */
 	@Override
 	public void registerListener(IListener listener) {
 		this.listenerMap.putIfAbsent(
@@ -50,10 +46,6 @@ public class GEB implements IBus {
 		this.listenerMap.get(listener.getClass()).add(listener);
 	}
 
-	/**
-	 * Unregister a listener from the bus.
-	 * @param listener the listener
-	 */
 	@Override
 	public void unregisterListener(IListener listener) {
 		this.listenerMap.computeIfPresent(
@@ -71,15 +63,15 @@ public class GEB implements IBus {
 		return listeners != null && listeners.contains(listener);
 	}
 
-	/**
-	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
-	 * @param event the event to fire
-	 * @return false if the event was canceled, true otherwise
-	 */
 	@Override
 	public boolean handleEvent(IEvent event) {
 		return Optional.ofNullable(this.dispatchMap.get(event.getClass()))
-			.map(dispatcher -> dispatcher.callListeners(event, this.listenerMap))
+			.map(dispatcher -> this.handleDispatch(dispatcher, event))
 			.orElse(true);
+	}
+
+	@SuppressWarnings("unchecked") // wild casts are bad but better than reflection
+	private <T extends IEvent> boolean handleDispatch(IEventDispatcher<T> dispatcher, IEvent event) {
+		return dispatcher.callListeners((T) event, this.listenerMap);
 	}
 }
