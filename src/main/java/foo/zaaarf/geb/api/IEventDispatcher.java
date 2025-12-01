@@ -1,4 +1,4 @@
-package ftbsc.geb.api;
+package foo.zaaarf.geb.api;
 
 import java.util.Map;
 import java.util.Set;

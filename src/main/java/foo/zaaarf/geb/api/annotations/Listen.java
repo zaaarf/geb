@@ -1,9 +1,9 @@
-package ftbsc.geb.api.annotations;
+package foo.zaaarf.geb.api.annotations;
 
-import ftbsc.geb.api.IBus;
-import ftbsc.geb.api.IEvent;
-import ftbsc.geb.api.IEventCancelable;
-import ftbsc.geb.api.IListener;
+import foo.zaaarf.geb.api.IBus;
+import foo.zaaarf.geb.api.IEvent;
+import foo.zaaarf.geb.api.IEventCancelable;
+import foo.zaaarf.geb.api.IListener;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

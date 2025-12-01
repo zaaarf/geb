@@ -1,4 +1,4 @@
-package ftbsc.geb.api;
+package foo.zaaarf.geb.api;
 
 /**
  * A generic interface for a bus that can work with this

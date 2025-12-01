@@ -1,4 +1,4 @@
-package ftbsc.geb.api;
+package foo.zaaarf.geb.api;
 
 /**
  * The common interface for all cancelable GEB events.

@@ -1,4 +1,4 @@
-package ftbsc.geb.api;
+package foo.zaaarf.geb.api;
 
 /**
  * Default implementation of {@link IEventCancelable}.

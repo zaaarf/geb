@@ -1,9 +1,9 @@
-package ftbsc.geb;
+package foo.zaaarf.geb;
 
-import ftbsc.geb.api.IBus;
-import ftbsc.geb.api.IEvent;
-import ftbsc.geb.api.IEventDispatcher;
-import ftbsc.geb.api.IListener;
+import foo.zaaarf.geb.api.IBus;
+import foo.zaaarf.geb.api.IEvent;
+import foo.zaaarf.geb.api.IEventDispatcher;
+import foo.zaaarf.geb.api.IListener;
 
 import java.util.Map;
 import java.util.Optional;
@@ -32,8 +32,9 @@ public class GEB implements IBus {
 	public GEB() {
 		this.listenerMap = new ConcurrentHashMap<>();
 		this.dispatchMap = new ConcurrentHashMap<>();
-		for(IEventDispatcher<?> dispatcher : ServiceLoader.load(IEventDispatcher.class))
+		for(IEventDispatcher<?> dispatcher : ServiceLoader.load(IEventDispatcher.class)) {
 			this.dispatchMap.put(dispatcher.eventType(), dispatcher);
+		}
 	}
 
 	@Override
