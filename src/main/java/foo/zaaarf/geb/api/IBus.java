@@ -14,12 +14,13 @@ public interface IBus {
 
 	/**
 	 * Unregisters a listener from the bus.
+	 * This will not recursively unregister it from eventual sub-buses.
 	 * @param listener the listener
 	 */
 	void unregisterListener(IListener listener);
 
 	/**
-	 * Checks whether a listener is currently registered.
+	 * Checks whether a listener is currently registered on this bus (excluding sub-buses).
 	 * @param listener the listener to check
 	 * @return true if the listener is registered
 	 */
