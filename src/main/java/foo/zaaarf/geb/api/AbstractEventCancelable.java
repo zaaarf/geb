@@ -8,7 +8,14 @@ public abstract class AbstractEventCancelable implements IEventCancelable {
 	/**
 	 * Flag that determines whether the event is canceled.
 	 */
-	protected boolean canceled = false;
+	protected boolean canceled;
+
+	/**
+	 * The default constructor.
+	 */
+	protected AbstractEventCancelable() {
+		this.canceled = false;
+	}
 
 	@Override
 	public boolean isCanceled() {
