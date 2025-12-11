@@ -19,17 +19,38 @@ public interface IBus {
 	void unregisterListener(IListener listener);
 
 	/**
-	 * Tells you whether a listener is currently registered.
-	 * Ideally this should be efficient.
+	 * Checks whether a listener is currently registered.
 	 * @param listener the listener to check
 	 * @return true if the listener is registered
 	 */
 	boolean isRegistered(IListener listener);
 
 	/**
-	 * Dispatches an event, calling all of its listeners that are subscribed to this bus.
+	 * Dispatches an event, calling all of its listeners that are subscribed to this bus,
+	 * and forwarding to all sub buses, if present.
 	 * @param event the event to fire
 	 * @return false if the event was canceled, true otherwise
 	 */
 	boolean handleEvent(IEvent event);
+
+	/**
+	 * Registers a sub-bus that will also receive this bus' events.
+	 * @param subBus the bus to register
+	 * @param priority the priority of the sub-bus, will be used to determine whether it is called
+	 *                 before or after the parent one, assuming the parent has priority 0
+	 */
+	void registerSubBus(IBus subBus, int priority);
+
+	/**
+	 * Unregisters a sub-bus from this bus.
+	 * @param subBus the bus to register
+	 */
+	void unregisterSubBus(IBus subBus);
+
+	/**
+	 * Checks whether a sub-bus is currently registered.
+	 * @param subBus the sub-bus to check
+	 * @return true if the sub-bus is registered
+	 */
+	boolean isRegistered(IBus subBus);
 }
