@@ -11,6 +11,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The official GEB implementation of {@link IBus}.
+ * This implementation has one additional stipulation: there can be at most one registered
+ * instance of every listener class.
  * @since 0.1.0
  */
 public class GEB implements IBus {

@@ -31,10 +31,10 @@ public @interface Listen {
 
 	/**
 	 * Flags this listener as inheritable.
-	 * Inheritable listeners will also be called for classes that extend the one where
-	 * the listener is actually placed.
-	 * On static methods, this value is ignored.
+	 * Classes extending this class with {@link Inherit} will also be called with this, provided
+	 * that this listener is marked as inheritable.
+	 * Static listeners will never be inherited.
 	 * @return whether this listener is inheritable
 	 */
-	boolean inherit() default false;
+	boolean inheritable() default true;
 }
