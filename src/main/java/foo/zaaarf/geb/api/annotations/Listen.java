@@ -28,4 +28,13 @@ public @interface Listen {
 	 * @return an integer indicating priority level for the listener
 	 */
 	int priority() default 0;
+
+	/**
+	 * Flags this listener as inheritable.
+	 * Inheritable listeners will also be called for classes that extend the one where
+	 * the listener is actually placed.
+	 * On static methods, this value is ignored.
+	 * @return whether this listener is inheritable
+	 */
+	boolean inherit() default false;
 }
