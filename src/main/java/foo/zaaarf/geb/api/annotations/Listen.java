@@ -23,8 +23,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface Listen {
 	/**
-	 * @return an integer indicating priority level for the listener, defaulting to 0;
-	 * 				 a higher value means it's executed before; it may be negative
+	 * Specifies the priority for this listener, defaulting to 0.
+	 * A higher value means it's executed before, and it may be negative.
+	 * @return an integer indicating priority level for the listener
 	 */
 	int priority() default 0;
 }

@@ -5,6 +5,9 @@ package foo.zaaarf.geb.api;
  * @since 0.4.1
  */
 public abstract class AbstractEventCancelable implements IEventCancelable {
+	/**
+	 * Flag that determines whether the event is canceled.
+	 */
 	protected boolean canceled = false;
 
 	@Override

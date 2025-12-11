@@ -20,6 +20,7 @@ public interface IEventDispatcher<T extends IEvent> {
 	boolean callListeners(T event, Map<Class<? extends IListener>, Set<IListener>> listeners);
 
 	/**
+	 * Specifies what type of event this dispatcher is for.
 	 * @return the {@link Class} representing the event this dispatcher works with
 	 */
 	Class<T> eventType();

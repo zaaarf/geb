@@ -1,17 +1,55 @@
 plugins {
-    id 'java'
-    id 'com.palantir.git-version' version '0.13.0'
+	id 'java-library'
+	id 'com.palantir.git-version' version '0.13.0'
+	id 'com.vanniktech.maven.publish.base' version '0.35.0'
 }
 
-archivesBaseName = 'geb'
+group = 'foo.zaaarf.geb'
 version = versionDetails().lastTag
 
 java {
-    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
-    withJavadocJar()
+	sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+	withSourcesJar()
+	withJavadocJar()
 }
 
-repositories {
-    mavenCentral()
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifact jar
+			artifact sourcesJar
+			artifact javadocJar
+		}
+	}
+}
+
+mavenPublishing {
+	publishToMavenCentral()
+	signAllPublications()
+	coordinates(project.group.toString(), 'core', project.version.toString())
+
+	pom {
+		name = "geb-$rootProject.name"
+		description = 'The Generative Event Bus'
+		inceptionYear = '2023'
+		url = 'https://zaaarf.foo/projects/geb/'
+		licenses {
+			license {
+				name = 'MIT'
+				url = 'https://opensource.org/license/mit'
+			}
+		}
+		developers {
+			developer {
+				id = 'zaaarf'
+				name = 'zaaarf'
+				email = 'me@zaaarf.foo'
+			}
+		}
+		scm {
+			url = 'https://github.com/zaaarf/geb/'
+			connection = 'scm:git:git://github.com/zaaarf/geb.git'
+			developerConnection = 'scm:git:ssh://git@github.com/zaaarf/geb.git'
+		}
+	}
 }
