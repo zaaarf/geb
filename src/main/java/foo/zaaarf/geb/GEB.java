@@ -128,6 +128,11 @@ public class GEB implements IBus {
 			return;
 		}
 
+		// prevent user from adding duplicates
+		if(this.busPriorities.containsKey(subBus)) {
+			this.unregisterSubBus(subBus);
+		}
+
 		this.busPriorities.put(subBus, priority);
 		this.busesToCall.add(subBus);
 		this.busesToCall.sort(Comparator.comparingInt(this.busPriorities::get));
