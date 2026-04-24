@@ -139,7 +139,7 @@ public class GEB implements IBus {
 		this.busesToCall.add(subBus);
 		this.busesToCall.sort(Comparator.comparingInt(this.busPriorities::get));
 
-		this.hasSubBuses = this.busesToCall.size() == 1;
+		this.hasSubBuses = this.busesToCall.size() != 1;
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class GEB implements IBus {
 		this.busPriorities.remove(subBus);
 		this.busesToCall.remove(subBus); // sort order should still be fine
 
-		this.hasSubBuses = this.busesToCall.size() == 1;
+		this.hasSubBuses = this.busesToCall.size() != 1;
 	}
 
 	@Override
