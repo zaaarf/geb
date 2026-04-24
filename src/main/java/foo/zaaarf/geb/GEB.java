@@ -93,10 +93,7 @@ public class GEB implements IBus {
 	public boolean handleEvent(IEvent event) {
 		if(this.hasSubBuses) {
 			for(IBus bus : this.busesToCall) {
-				if(
-					(bus == this && !this.handleEventSingle(event))
-						|| !bus.handleEvent(event)
-				) {
+				if(bus == this ? !this.handleEventSingle(event) : !bus.handleEvent(event)) {
 					return false;
 				}
 			}
