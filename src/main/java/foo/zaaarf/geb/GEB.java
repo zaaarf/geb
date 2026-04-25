@@ -54,12 +54,32 @@ public class GEB implements IBus {
 		this.busesToCall.add(this);
 		this.busPriorities.put(this, 0);
 
-		// load event dispatchers
+		// init event dispatcher maps
 		this.listenerMap = new ConcurrentHashMap<>();
 		this.dispatchMap = new ConcurrentHashMap<>();
-		for(IEventDispatcher<?> dispatcher : ServiceLoader.load(IEventDispatcher.class)) {
-			this.dispatchMap.put(dispatcher.eventType(), dispatcher);
+	}
+
+	/**
+	 * Attempts to load with a {@link ServiceLoader} all dispatchers in the given class loader.
+	 * Note: if you are using {@link #registerSubBus the sub bus feature}, ensure that the sub-buses
+	 * are in a separate class loader or that they are not using SPI. Otherwise, this method might
+	 * pick up on their dispatchers too, leading to broken behaviour.
+	 * @param classLoader the class loader
+	 */
+	public void loadAndRegisterDispatchers(ClassLoader classLoader) {
+		for(IEventDispatcher<?> dispatcher : ServiceLoader.load(IEventDispatcher.class, classLoader)) {
+			this.registerDispatcher(dispatcher);
 		}
+	}
+
+	@Override
+	public void registerDispatcher(IEventDispatcher<?> dispatcher) {
+		this.dispatchMap.put(dispatcher.eventType(), dispatcher);
+	}
+
+	@Override
+	public void unregisterDispatcher(IEventDispatcher<?> dispatcher) {
+		this.dispatchMap.remove(dispatcher.eventType(), dispatcher);
 	}
 
 	@Override

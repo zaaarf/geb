@@ -7,6 +7,19 @@ package foo.zaaarf.geb.api;
  */
 public interface IBus {
 	/**
+	 * Registers a new dispatcher on the bus.
+	 * @param dispatcher the dispatcher
+	 */
+	void registerDispatcher(IEventDispatcher<?> dispatcher);
+
+	/**
+	 * Unregisters a dispatcher from the bus.
+	 * This will not recursively unregister it from eventual sub-buses.
+	 * @param dispatcher the dispatcher
+	 */
+	void unregisterDispatcher(IEventDispatcher<?> dispatcher);
+
+	/**
 	 * Registers a new listener on the bus.
 	 * @param listener the listener
 	 */

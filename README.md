@@ -38,7 +38,12 @@ Despite the unusual premise, GEB does not work much differently from other event
 You declare the bus, as follows:
 
 ```java
-public static final GEB EVENT_BUS = new GEB();
+public static final GEB EVENT_BUS;
+static {
+	EVENT_BUS = new GEB();
+	// optionally make it load the dispatchers right away
+	EVENT_BUS.loadAndRegisterDispatchers(this.getClass().getClassLoader());
+}
 ```
 
 Noting that there's nothing stopping you from implementing `IBus` (the interface) in your own way.
