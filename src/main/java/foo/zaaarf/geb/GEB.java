@@ -63,7 +63,7 @@ public class GEB implements IBus {
 	 * Attempts to load with a {@link ServiceLoader} all dispatchers in the given class loader.
 	 * Note: if you are using {@link #registerSubBus the sub bus feature}, ensure that the sub-buses
 	 * are in a separate class loader or that they are not using SPI. Otherwise, this method might
-	 * pick up on their dispatchers too, leading to broken behaviour.
+	 * pick up on their dispbatchers too, leading to broken behaviour.
 	 * @param classLoader the class loader
 	 */
 	public void loadAndRegisterDispatchers(ClassLoader classLoader) {
@@ -141,6 +141,7 @@ public class GEB implements IBus {
 		return dispatcher.callListeners((T) event, this.listenerMap);
 	}
 
+	@SuppressWarnings("SuspiciousMethodCalls")
 	@Override
 	public void registerSubBus(IBus subBus, int priority) {
 		if(subBus == this) { // prevent user from doing something stupid
@@ -154,7 +155,7 @@ public class GEB implements IBus {
 
 		this.busPriorities.put(subBus, priority);
 		this.busesToCall.add(subBus);
-		this.busesToCall.sort(Comparator.comparingInt(this.busPriorities::get));
+		this.busesToCall.sort(Comparator.comparingInt(this.busPriorities::get).reversed());
 
 		this.hasSubBuses = this.busesToCall.size() != 1;
 	}

@@ -1,5 +1,7 @@
 package foo.zaaarf.geb.api;
 
+import foo.zaaarf.geb.api.annotations.Listen;
+
 /**
  * A generic interface for a bus that can work with this
  * event system.
@@ -49,6 +51,7 @@ public interface IBus {
 
 	/**
 	 * Registers a sub-bus that will also receive this bus' events.
+	 * The priority system is the same used for events, see {@link Listen#priority()}.
 	 * @param subBus the bus to register
 	 * @param priority the priority of the sub-bus, will be used to determine whether it is called
 	 *                 before or after the parent one, assuming the parent has priority 0
