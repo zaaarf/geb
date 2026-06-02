@@ -84,12 +84,10 @@ public class GEB implements IBus {
 
 	@Override
 	public void registerListener(IListener listener) {
-		this.listenerMap.putIfAbsent(
+		this.listenerMap.computeIfAbsent(
 			listener.getClass(),
-			ConcurrentHashMap.newKeySet()
-		);
-
-		this.listenerMap.get(listener.getClass()).add(listener);
+			k -> ConcurrentHashMap.newKeySet()
+		).add(listener);
 	}
 
 	@Override
